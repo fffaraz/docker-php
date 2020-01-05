@@ -16,6 +16,7 @@ libssl-dev mariadb-client zlib1g-dev libzip-dev
 
 sed -ri -e 's!/var/www/html!/app/public!g' /etc/apache2/sites-available/*.conf
 sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
