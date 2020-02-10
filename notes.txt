@@ -1,0 +1,1 @@
+https://www.reddit.com/r/docker/comments/f1cn1t/phpapache_app_10x_slower_than_my_nondocker_app_in/
