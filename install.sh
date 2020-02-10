@@ -24,6 +24,10 @@ echo "max_execution_time=0" > $PHP_INI_DIR/conf.d/max-execution-time.ini
 echo "expose_php=off" > $PHP_INI_DIR/conf.d/expose-php.ini
 #echo "default_socket_timeout=60" > $PHP_INI_DIR/conf.d/default-socket-timeout.ini
 
+#pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
+#pecl install mongodb
+#docker-php-ext-enable mongodb
+
 #pecl install redis-5.1.1
 #docker-php-ext-enable redis
 
@@ -65,6 +69,7 @@ a2enmod headers
 
 # Install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+echo "alias art='php artisan'" >> /root/.bashrc
 
 # Install nodejs https://github.com/nodesource/distributions
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
