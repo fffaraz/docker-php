@@ -62,7 +62,7 @@ docker-php-ext-install -j$(nproc) pgsql
 docker-php-ext-install -j$(nproc) sockets
 docker-php-ext-install -j$(nproc) tokenizer
 docker-php-ext-install -j$(nproc) zip
-# TODO: mcrypt dom gmp imagick memcached mongodb
+# TODO: mcrypt dom gmp imagick memcached mongodb exif
 
 a2enmod rewrite
 a2enmod headers
