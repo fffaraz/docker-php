@@ -70,6 +70,8 @@ a2enmod headers
 # Install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 echo "alias art='php artisan'" >> /root/.bashrc
+echo "alias ll='ls -alh'" >> /root/.bashrc
+echo "export TERM=xterm" >> /root/.bashrc
 
 # Install nodejs https://github.com/nodesource/distributions
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
