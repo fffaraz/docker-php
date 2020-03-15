@@ -1,0 +1,40 @@
+version: '3.5'
+
+services:
+  web:
+    image: fffaraz/php
+    restart: always
+    depends_on:
+      - postgres
+      - mariadb
+      - redis
+    volumes:
+      - ./app:/app
+
+  postgres:
+    image: postgres:12.2 # https://hub.docker.com/_/postgres
+    restart: always
+    env_file: .env
+    shm_size: 4G
+    command: postgres -c config_file=/etc/postgresql.conf
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+      - ./conf/postgresql.conf:/etc/postgresql.conf:ro
+
+  redis:
+    image: redis:latest # https://hub.docker.com/_/redis
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"] # "--auto-aof-rewrite-min-size", "8mb"
+    logging:
+      driver: "none"
+    volumes:
+      - ./volumes/redis:/data
+
+  mariadb:
+    image: mariadb:10.4 # https://hub.docker.com/_/mariadb/
+    restart: always
+    env_file: .env
+    volumes:
+      - ./conf/mysql:/etc/mysql/conf.d
+      - ./volumes/mysql-data:/var/lib/mysql
+      - ./volumes/mysql-log:/var/log/mysql
