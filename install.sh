@@ -4,12 +4,17 @@ set -euxo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get -yq update
-apt-get -yq install bash build-essential ca-certificates dnsutils git nano netbase unzip wget whois zip \
-curl libcurl4 libcurl4-openssl-dev openssl \
-libbz2-dev libfreetype6-dev libicu-dev libjpeg62-turbo-dev libmcrypt-dev libonig-dev libpng-dev libpq-dev libsqlite3-dev \
-libssl-dev mariadb-client zlib1g-dev libzip-dev
-# postgresql-client default-mysql-client
+apt-get -yq upgrade
+apt-get -yq install \
+            bash build-essential ca-certificates dnsutils git nano netbase unzip wget whois zip \
+            curl libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev \
+            libfreetype6-dev libicu-dev libjpeg62-turbo-dev libonig-dev libpng-dev \
+            mariadb-client libpq-dev libsqlite3-dev libbz2-dev zlib1g-dev libzip-dev
+
+# TODO: postgresql-client default-mysql-client
 # TODO: ttf-mscorefonts
+# TODO: logrotate
+# TODO: dropbear
 
 #update-ca-certifcates
 #wget https://curl.haxx.se/ca/cacert.pem -o /usr/lib/ssl/cert.pem
@@ -69,13 +74,16 @@ a2enmod headers
 
 # Install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-echo "alias art='php artisan'" >> /root/.bashrc
-echo "alias ll='ls -alh'" >> /root/.bashrc
-echo "export TERM=xterm" >> /root/.bashrc
 
 # Install nodejs https://github.com/nodesource/distributions
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
 apt-get install -y nodejs
+
+# Environment variables
+echo "alias art='php artisan'" >> /root/.bashrc
+echo "alias ll='ls -alh'" >> /root/.bashrc
+echo "export TERM=xterm" >> /root/.bashrc
+echo "export COMPOSER_HOME=/app/.composer" >> /root/.bashrc
 
 # Clean
 apt-get autoremove -y
