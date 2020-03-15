@@ -1,0 +1,43 @@
+[mysqld]
+default_storage_engine=InnoDB
+skip_name_resolve=1
+general_log=0
+general_log_file=/var/log/mysql/general.log
+innodb_fast_shutdown=0
+innodb_file_per_table=1
+innodb_lock_wait_timeout=120
+local_infile=0
+log_error=/var/log/mysql/error.log
+log_warnings=2
+long_query_time=1
+max_allowed_packet=1G
+max_connect_errors=1000000
+max_connections=500
+open_files_limit=100000
+performance_schema=0
+skip_external_locking=1
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow.log
+log_queries_not_using_indexes=0
+character_set_server=utf8
+character_set_filesystem=utf8
+collation_server=utf8_unicode_ci
+# symbolic-links=0
+# character_set_results=utf8
+# character_set_client_handshake=utf8
+# character_set_connection=utf8
+# collation_connection=utf8_unicode_ci
+# sql_mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+# skip-innodb_doublewrite
+# innodb_doublewrite = 0
+
+[client]
+default-character-set=utf8
+
+[mysqldump]
+quick
+max_allowed_packet=1G
+
+[mysql]
+default-character-set=utf8
+no-auto-rehash
