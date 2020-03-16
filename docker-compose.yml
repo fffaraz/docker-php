@@ -8,15 +8,15 @@ services:
   web:
     image: fffaraz/php
     restart: always
-    depends_on:
-      - postgres
-      - mariadb
-      - redis
     volumes:
       - ./app:/app
     networks:
       - default
       - proxy
+    depends_on:
+      - postgres
+      - mariadb
+      - redis
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.mywebsite-http.entrypoints=http"
