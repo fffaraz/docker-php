@@ -5,10 +5,10 @@ if [ $# -lt 1 ]; then
     mkdir -p /app/public
     mkdir -p /app/dockerweb/tmp
     mkdir -p /app/dockerweb/log
+    env > /app/dockerweb/envvars
     chown -R www-data:www-data /app
     #find /home/webuser/www -type d -exec chmod 0755 {} \;
     #find /home/webuser/www -type f -exec chmod 0644 {} \;
-    env > /app/dockerweb/envvars
     if [ -f /app/composer.json ]; then
         echo "Found 'composer.json', installing dependencies ..."
         #TODO: composer install --no-interaction --no-ansi --optimize-autoloader
