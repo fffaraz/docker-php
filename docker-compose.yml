@@ -1,5 +1,9 @@
 version: '3.5'
 
+networks:
+  proxy:
+    external: true
+
 services:
   web:
     image: fffaraz/php
@@ -10,6 +14,21 @@ services:
       - redis
     volumes:
       - ./app:/app
+    networks:
+      - default
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mywebsite-http.entrypoints=http"
+      - "traefik.http.routers.mywebsite-http.rule=Host(`mywebsite.example.com`)"
+      - "traefik.http.routers.mywebsite-http.middlewares=https-redirect@file"
+      - "traefik.http.routers.mywebsite-secure.entrypoints=https"
+      - "traefik.http.routers.mywebsite-secure.rule=Host(`mywebsite.example.com`)"
+      - "traefik.http.routers.mywebsite-secure.tls=true"
+      - "traefik.http.routers.mywebsite-secure.tls.certresolver=http"
+      - "traefik.http.routers.mywebsite-secure.service=mywebsite"
+      - "traefik.http.services.mywebsite.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
 
   postgres:
     image: postgres:12.2 # https://hub.docker.com/_/postgres
