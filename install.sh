@@ -30,22 +30,6 @@ echo "max_execution_time=0" > $PHP_INI_DIR/conf.d/max-execution-time.ini
 echo "expose_php=off" > $PHP_INI_DIR/conf.d/expose-php.ini
 #echo "default_socket_timeout=60" > $PHP_INI_DIR/conf.d/default-socket-timeout.ini
 
-#pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
-
-#pecl install mongodb
-#docker-php-ext-enable mongodb
-
-#pecl install redis-5.1.1
-#docker-php-ext-enable redis
-
-#pecl install xdebug-2.8.1
-#docker-php-ext-enable xdebug
-
-#pecl install grpc
-#pecl install protobuf
-#docker-php-ext-enable grpc
-#docker-php-ext-enable protobuf
-
 docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 docker-php-ext-configure mysqli --with-mysqli=mysqlnd
 docker-php-ext-configure gd  --with-freetype --with-jpeg
@@ -71,8 +55,28 @@ docker-php-ext-install -j$(nproc) tokenizer
 docker-php-ext-install -j$(nproc) zip
 # TODO: mcrypt dom gmp imagick memcached mongodb exif
 
+#pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
+
+#pecl install mongodb
+#docker-php-ext-enable mongodb
+
+#pecl install redis-5.1.1
+#docker-php-ext-enable redis
+
+#pecl install xdebug-2.8.1
+#docker-php-ext-enable xdebug
+
+#pecl install grpc
+#pecl install protobuf
+#docker-php-ext-enable grpc
+#docker-php-ext-enable protobuf
+
 pecl install msgpack
 echo "extension=msgpack.so" > $PHP_INI_DIR/conf.d/msgpack.ini
+# https://github.com/msgpack/msgpack-php
+# https://github.com/rybakit/msgpack.php
+
+#pecl clear-cache
 
 a2enmod rewrite
 a2enmod headers
