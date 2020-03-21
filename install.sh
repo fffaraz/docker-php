@@ -24,12 +24,14 @@ sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/co
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
+
 echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
 echo "max_execution_time=0" > $PHP_INI_DIR/conf.d/max-execution-time.ini
 echo "expose_php=off" > $PHP_INI_DIR/conf.d/expose-php.ini
 #echo "default_socket_timeout=60" > $PHP_INI_DIR/conf.d/default-socket-timeout.ini
 
 #pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
+
 #pecl install mongodb
 #docker-php-ext-enable mongodb
 
@@ -68,6 +70,9 @@ docker-php-ext-install -j$(nproc) sockets
 docker-php-ext-install -j$(nproc) tokenizer
 docker-php-ext-install -j$(nproc) zip
 # TODO: mcrypt dom gmp imagick memcached mongodb exif
+
+pecl install msgpack
+echo "extension=msgpack.so" > $PHP_INI_DIR/conf.d/msgpack.ini
 
 a2enmod rewrite
 a2enmod headers
