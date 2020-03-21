@@ -6,7 +6,7 @@ networks:
 
 services:
   web:
-    image: fffaraz/php
+    image: fffaraz/php # https://hub.docker.com/r/fffaraz/php
     restart: always
     volumes:
       - ./app:/app
