@@ -1,1 +1,20 @@
+while true; do date; git pull; sleep 5; done
+---
+docker-compose exec web bash
+---
+docker-compose run --rm web composer update --no-interaction
+docker-compose run --rm web composer dumpautoload
+docker-compose run --rm web composer require predis/predis
+---
+docker-compose run --rm -e SLEEP=5 web php artisan migrate:refresh --seed
+docker-compose run --rm web php artisan key:generate
+docker-compose run --rm web php artisan config:cache
+docker-compose run --rm web php artisan config:clear
+docker-compose run --rm web php artisan event:generate
+docker-compose run --rm web php artisan storage:link
+docker-compose run --rm web php artisan list
+---
+docker-compose run --rm postgres psql -h postgres -U postgres
+VACUUM (VERBOSE, ANALYZE, FULL) users;
+---
 https://www.reddit.com/r/docker/comments/f1cn1t/phpapache_app_10x_slower_than_my_nondocker_app_in/
