@@ -97,12 +97,6 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
 apt-get install -y nodejs
 
-# Environment variables
-echo "alias art='php artisan'" >> /root/.bashrc
-echo "alias ll='ls -alh'" >> /root/.bashrc
-echo "export TERM=xterm" >> /root/.bashrc
-echo "export COMPOSER_HOME=/app/.composer" >> /root/.bashrc
-
 # Clean
 apt-get autoremove -y
 apt-get clean
