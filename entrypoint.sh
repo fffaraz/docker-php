@@ -16,7 +16,7 @@ chown -R www-data:www-data /app
 #find /app -type d -exec chmod 0755 {} \;
 #find /app -type f -exec chmod 0644 {} \;
 
-if [[ -f /app/composer.json && ! -f /app/composer.lock ]]; then
+if [[ -f /app/composer.json && ! -f /app/vendor/autoload.php ]]; then
     echo "Found 'composer.json', installing dependencies ..."
     #TODO: composer install --no-interaction --no-ansi --optimize-autoloader
 fi
