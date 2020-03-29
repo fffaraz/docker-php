@@ -4,8 +4,9 @@ set -euxo pipefail
 # Environment variables
 alias art='php artisan'
 alias ll='ls -alh'
-export TERM=xterm
 export COMPOSER_HOME=/app/.composer
+export PATH=$PATH:/app/vendor/bin
+export TERM=xterm
 
 mkdir -p /app/public
 mkdir -p /app/.dockerweb/tmp
