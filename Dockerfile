@@ -1,7 +1,6 @@
 FROM php:apache
 
 ENTRYPOINT ["/entrypoint.sh"]
-ENV TERM xterm
 EXPOSE 80
 VOLUME /app
 WORKDIR /app
