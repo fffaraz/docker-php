@@ -3,9 +3,9 @@ set -euxo pipefail
 
 if [ $# -lt 1 ]; then
     mkdir -p /app/public
-    mkdir -p /app/dockerweb/tmp
-    mkdir -p /app/dockerweb/log
-    env > /app/dockerweb/envvars
+    mkdir -p /app/.dockerweb/tmp
+    mkdir -p /app/.dockerweb/log
+    env > /app/.dockerweb/envvars
     chown -R www-data:www-data /app
     #find /app -type d -exec chmod 0755 {} \;
     #find /app -type f -exec chmod 0644 {} \;
