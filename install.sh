@@ -24,6 +24,7 @@ sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/co
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 echo "RemoteIPHeader X-Forwarded-For" >> /etc/apache2/apache2.conf
+echo "RemoteIPTrustedProxy 172.16.0.0/12" >> /etc/apache2/apache2.conf
 echo 'SetEnvIf X-Forwarded-Proto "https" HTTPS=on' >> /etc/apache2/apache2.conf
 
 cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
