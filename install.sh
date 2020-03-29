@@ -22,6 +22,7 @@ apt-get -yq install \
 sed -ri -e 's!/var/www/html!/app/public!g' /etc/apache2/sites-available/*.conf
 sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
+echo "RemoteIPHeader X-Forwarded-For" >> /etc/apache2/apache2.conf
 
 cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
@@ -78,8 +79,9 @@ echo "extension=msgpack.so" > $PHP_INI_DIR/conf.d/msgpack.ini
 
 #pecl clear-cache
 
-a2enmod rewrite
 a2enmod headers
+a2enmod remoteip
+a2enmod rewrite
 
 # Install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
