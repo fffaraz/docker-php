@@ -6,7 +6,9 @@ alias art='php artisan'
 alias ll='ls -alh'
 export COMPOSER_HOME=/app/.composer
 export PATH=$PATH:/app/vendor/bin
+export TEMP=/app/.dockerweb/tmp
 export TERM=xterm
+export PS1='\u@\H:\w\$ '
 
 mkdir -p /app/public
 mkdir -p /app/.dockerweb/tmp
