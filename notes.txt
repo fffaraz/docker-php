@@ -18,3 +18,15 @@ docker-compose run --rm postgres psql -h postgres -U postgres
 VACUUM (VERBOSE, ANALYZE, FULL) users;
 ---
 https://www.reddit.com/r/docker/comments/f1cn1t/phpapache_app_10x_slower_than_my_nondocker_app_in/
+---
+https://github.com/khoanguyen96/dockerfiles/tree/master/apache-php-extra
+https://hub.docker.com/r/khoanguyent/apache-php-extra
+---
+https://www.digitalocean.com/community/questions/get-client-public-ip-on-apache-server-used-behind-load-balancer
+---
+https://www.daveperrett.com/articles/2009/08/10/passing-ips-to-apache-with-nginx-proxy/
+https://github.com/nextcloud/docker/issues/294
+https://github.com/laravel/framework/issues/7251
+https://laravel.io/forum/06-22-2014-requestsecure-return-false-no-ssl-but-ssl-certificate-is-applied?page=1
+https://github.com/fideloper/TrustedProxy
+---
