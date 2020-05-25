@@ -1,12 +1,12 @@
 FROM php:apache
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 80
 VOLUME /app
 WORKDIR /app
 
-COPY install.sh /
-RUN chown root:root /install.sh && chmod 544 /install.sh && sync && /install.sh
+COPY docker-install.sh /
+RUN chown root:root /docker-install.sh && chmod 544 /docker-install.sh && sync && /docker-install.sh
 
-COPY entrypoint.sh /
-RUN chown root:root /entrypoint.sh && chmod 544 /entrypoint.sh
+COPY docker-entrypoint.sh /
+RUN chown root:root /docker-entrypoint.sh && chmod 544 /docker-entrypoint.sh
