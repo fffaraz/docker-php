@@ -125,7 +125,8 @@ curl -sL https://deb.nodesource.com/setup_12.x | bash -
 apt-get install -y nodejs
 
 # Environment variables
-cat <<EOF >> /etc/profile
+# /etc/bash.bashrc
+cat <<EOF >> /etc/profile.d/docker-php.sh
 export COMPOSER_HOME=/app/.composer
 export PATH=$PATH:/app/vendor/bin
 export TEMP=/app/.dockerweb/tmp

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-source /etc/profile
+source /etc/profile.d/docker-php.sh
 
 mkdir -p /app/public
 mkdir -p /app/.dockerweb/tmp
