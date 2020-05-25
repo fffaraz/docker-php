@@ -1,7 +1,7 @@
 FROM php:apache
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-EXPOSE 80
+EXPOSE 80 22
 VOLUME /app
 WORKDIR /app
 

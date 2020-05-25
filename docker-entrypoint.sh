@@ -1,14 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-# Environment variables
-alias art='php artisan'
-alias ll='ls -alh'
-export COMPOSER_HOME=/app/.composer
-export PATH=$PATH:/app/vendor/bin
-export TEMP=/app/.dockerweb/tmp
-export TERM=xterm
-export PS1='\u@\H:\w\$ '
+#source /etc/profile
 
 mkdir -p /app/public
 mkdir -p /app/.dockerweb/tmp
@@ -26,6 +19,12 @@ fi
 
 [ $# -lt 1 ] && exec apache2-foreground
 
+if [ "$1" == "ssh" ]; then
+    echo "www-data:${SSHPASSWORD}" | chpasswd
+    echo "root:${SSHPASSWORD}" | chpasswd
+    exec /usr/sbin/sshd -D
+fi
+
 sleep ${SLEEP:-0}
 # eval "$@" <or> exec "$@"
-su -s /bin/bash -l www-data -c "export COMPOSER_HOME=/app/.composer; cd /app; $*"
+su -s /bin/bash -l www-data -c "cd /app; $*"

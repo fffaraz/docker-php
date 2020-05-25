@@ -33,6 +33,16 @@ services:
       - "traefik.http.services.mywebsite.loadbalancer.server.port=80"
       - "traefik.docker.network=proxy"
 
+  ssh:
+    image: fffaraz/php
+    restart: always
+    volumes:
+      - ./app:/app
+    command: ssh
+    env_file: .env
+    ports:
+      - 8022:22
+
   postgres:
     image: postgres:12.3 # https://hub.docker.com/_/postgres
     restart: always
@@ -43,6 +53,17 @@ services:
       - ./volumes/postgres:/var/lib/postgresql/data
       - ./conf/postgresql.conf:/etc/postgresql.conf:ro
 
+  pgadmin:
+    image: dpage/pgadmin4 # https://hub.docker.com/r/dpage/pgadmin4/
+    restart: always
+    depends_on:
+      - postgres
+    env_file: .env
+    logging:
+      driver: "none"
+    volumes:
+      - ./volumes/pgadmin:/var/lib/pgadmin
+
   redis:
     image: redis:latest # https://hub.docker.com/_/redis
     restart: always
@@ -52,6 +73,15 @@ services:
     volumes:
       - ./volumes/redis:/data
 
+  phpredisadmin:
+    image: erikdubbelboer/phpredisadmin # https://github.com/erikdubbelboer/phpRedisAdmin
+    restart: always
+    depends_on:
+      - redis
+    env_file: .env
+    logging:
+      driver: "none"
+
   mariadb:
     image: mariadb:10.4 # https://hub.docker.com/_/mariadb/
     restart: always
@@ -60,3 +90,22 @@ services:
       - ./conf/mysql:/etc/mysql/conf.d
       - ./volumes/mysql-data:/var/lib/mysql
       - ./volumes/mysql-log:/var/log/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin # https://hub.docker.com/r/phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    external_links:
+      - mariadb:db
+    volumes:
+      - ./volumes/phpmyadmin:/sessions
+
+  adminer:
+    image: adminer # https://github.com/TimWolla/docker-adminer https://github.com/vrana/adminer/
+    restart: always
+    depends_on:
+      - postgres
+      - mariadb
+    logging:
+      driver: "none"

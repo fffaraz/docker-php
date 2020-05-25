@@ -10,16 +10,16 @@ apt-get -yq install \
             curl libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev \
             libfreetype6-dev libicu-dev libjpeg62-turbo-dev libonig-dev libpng-dev libjpeg-dev \
             mariadb-client libpq-dev libsqlite3-dev libbz2-dev zlib1g-dev libzip-dev \
-            libmagickwand-dev \
+            libmagickwand-dev openssh-server \
             ghostscript # Ghostscript is required for rendering PDF previews
 
-# TODO: postgresql-client default-mysql-client
-# TODO: ttf-mscorefonts
-# TODO: logrotate
-# TODO: dropbear
+# TODO: logrotate ttf-mscorefonts postgresql-client default-mysql-client
 
 #update-ca-certifcates
 #wget https://curl.haxx.se/ca/cacert.pem -o /usr/lib/ssl/cert.pem
+
+sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
 
 sed -ri -e 's!/var/www/html!/app/public!g' /etc/apache2/sites-available/*.conf
 sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
@@ -45,7 +45,6 @@ docker-php-ext-install -j$(nproc) intl
 docker-php-ext-install -j$(nproc) mbstring
 docker-php-ext-install -j$(nproc) mysqli
 docker-php-ext-install -j$(nproc) opcache
-#docker-php-ext-install -j$(nproc) openssl
 docker-php-ext-install -j$(nproc) pcntl
 docker-php-ext-install -j$(nproc) pdo
 docker-php-ext-install -j$(nproc) pdo_mysql
@@ -55,8 +54,7 @@ docker-php-ext-install -j$(nproc) pgsql
 docker-php-ext-install -j$(nproc) sockets
 docker-php-ext-install -j$(nproc) tokenizer
 docker-php-ext-install -j$(nproc) zip
-
-# TODO: mcrypt dom gmp memcached mongodb
+# TODO: openssl mcrypt dom gmp memcached mongodb
 
 pecl install imagick
 docker-php-ext-enable imagick
@@ -126,6 +124,17 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 # Install nodejs https://github.com/nodesource/distributions
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
 apt-get install -y nodejs
+
+# Environment variables
+cat <<EOF >> /etc/profile
+export COMPOSER_HOME=/app/.composer
+export PATH=$PATH:/app/vendor/bin
+export TEMP=/app/.dockerweb/tmp
+export TERM=xterm
+export PS1='\u@\H:\w\$ '
+alias art='php artisan'
+alias ll='ls -alh'
+EOF
 
 # Clean
 apt-get autoremove -y
