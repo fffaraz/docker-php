@@ -87,7 +87,7 @@ services:
     restart: always
     env_file: .env
     volumes:
-      - ./conf/mysql:/etc/mysql/conf.d
+      - ./conf/mysql:/etc/mysql/mariadb.conf.d
       - ./volumes/mysql-data:/var/lib/mysql
       - ./volumes/mysql-log:/var/log/mysql
 
