@@ -10,7 +10,7 @@ apt-get -yq install \
             curl libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev \
             libfreetype6-dev libicu-dev libjpeg62-turbo-dev libonig-dev libpng-dev libjpeg-dev \
             mariadb-client libpq-dev libsqlite3-dev libbz2-dev zlib1g-dev libzip-dev \
-            libmagickwand-dev openssh-server \
+            libmagickwand-dev libwebp-dev libxpm-dev openssh-server gnupg dirmngr \
             ghostscript # Ghostscript is required for rendering PDF previews
 # TODO: logrotate ttf-mscorefonts postgresql-client default-mysql-client
 
@@ -32,7 +32,7 @@ echo "expose_php=off" > $PHP_INI_DIR/conf.d/expose-php.ini
 
 docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 docker-php-ext-configure mysqli --with-mysqli=mysqlnd
-docker-php-ext-configure gd  --with-freetype --with-jpeg
+docker-php-ext-configure gd  --with-freetype --with-jpeg --with-webp --with-xpm
 docker-php-ext-install -j$(nproc) bcmath
 docker-php-ext-install -j$(nproc) exif
 docker-php-ext-install -j$(nproc) bz2
