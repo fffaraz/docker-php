@@ -12,7 +12,6 @@ apt-get -yq install \
             mariadb-client libpq-dev libsqlite3-dev libbz2-dev zlib1g-dev libzip-dev \
             libmagickwand-dev openssh-server \
             ghostscript # Ghostscript is required for rendering PDF previews
-
 # TODO: logrotate ttf-mscorefonts postgresql-client default-mysql-client
 
 #update-ca-certifcates
