@@ -27,5 +27,5 @@ fi
 [ $# -lt 1 ] && exec apache2-foreground
 
 sleep ${SLEEP:-0}
-# eval "$@", exec "$@"
+# eval "$@" <or> exec "$@"
 su -s /bin/bash -l www-data -c "export COMPOSER_HOME=/app/.composer; cd /app; $*"

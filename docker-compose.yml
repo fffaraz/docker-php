@@ -3,6 +3,8 @@ version: '3.5'
 networks:
   proxy:
     external: true
+  isolated_nw:
+    external: true
 
 services:
   web:
@@ -13,6 +15,7 @@ services:
     networks:
       - default
       - proxy
+      - isolated_nw
     depends_on:
       - postgres
       - mariadb
@@ -31,7 +34,7 @@ services:
       - "traefik.docker.network=proxy"
 
   postgres:
-    image: postgres:12.2 # https://hub.docker.com/_/postgres
+    image: postgres:12.3 # https://hub.docker.com/_/postgres
     restart: always
     env_file: .env
     shm_size: 4G

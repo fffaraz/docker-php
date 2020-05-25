@@ -30,3 +30,4 @@ https://github.com/laravel/framework/issues/7251
 https://laravel.io/forum/06-22-2014-requestsecure-return-false-no-ssl-but-ssl-certificate-is-applied?page=1
 https://github.com/fideloper/TrustedProxy
 ---
+https://github.com/docker-library/wordpress
