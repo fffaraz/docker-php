@@ -3,8 +3,6 @@ version: '3.5'
 networks:
   proxy:
     external: true
-  isolated_nw:
-    external: true
 
 services:
   web:
@@ -15,7 +13,6 @@ services:
     networks:
       - default
       - proxy
-      - isolated_nw
     depends_on:
       - postgres
       - mariadb
