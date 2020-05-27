@@ -17,19 +17,6 @@ apt-get -yq install \
 #update-ca-certifcates
 #wget https://curl.haxx.se/ca/cacert.pem -o /usr/lib/ssl/cert.pem
 
-sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
-
-sed -ri -e 's!/var/www/html!/app/public!g' /etc/apache2/sites-available/*.conf
-sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
-
-echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
-echo "max_execution_time=0" > $PHP_INI_DIR/conf.d/max-execution-time.ini
-echo "expose_php=off" > $PHP_INI_DIR/conf.d/expose-php.ini
-#echo "default_socket_timeout=120" > $PHP_INI_DIR/conf.d/default-socket-timeout.ini
-
 docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 docker-php-ext-configure mysqli --with-mysqli=mysqlnd
 docker-php-ext-configure gd  --with-freetype --with-jpeg --with-webp --with-xpm
@@ -55,13 +42,18 @@ docker-php-ext-install -j$(nproc) tokenizer
 docker-php-ext-install -j$(nproc) zip
 # TODO: openssl mcrypt dom gmp memcached mongodb
 
+#pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
+
 pecl install imagick
 docker-php-ext-enable imagick
 
 pecl install redis
 docker-php-ext-enable redis
 
-#pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
+pecl install msgpack
+echo "extension=msgpack.so" > $PHP_INI_DIR/conf.d/msgpack.ini
+# https://github.com/msgpack/msgpack-php
+# https://github.com/rybakit/msgpack.php
 
 #pecl install mongodb
 #docker-php-ext-enable mongodb
@@ -75,12 +67,21 @@ docker-php-ext-enable redis
 #pecl install grpc
 #docker-php-ext-enable grpc
 
-pecl install msgpack
-echo "extension=msgpack.so" > $PHP_INI_DIR/conf.d/msgpack.ini
-# https://github.com/msgpack/msgpack-php
-# https://github.com/rybakit/msgpack.php
-
 #pecl clear-cache
+
+# Config files
+sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+
+sed -ri -e 's!/var/www/html!/app/public!g' /etc/apache2/sites-available/*.conf
+sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
+
+echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
+echo "max_execution_time=0" > $PHP_INI_DIR/conf.d/max-execution-time.ini
+echo "expose_php=off" > $PHP_INI_DIR/conf.d/expose-php.ini
+#echo "default_socket_timeout=120" > $PHP_INI_DIR/conf.d/default-socket-timeout.ini
 
 cat <<EOF > $PHP_INI_DIR/conf.d/opcache.ini
 opcache.memory_consumption=128
@@ -90,14 +91,17 @@ opcache.revalidate_freq=2
 opcache.fast_shutdown=1
 EOF
 
-a2enmod deflate
-a2enmod expires
-a2enmod filter
-a2enmod headers
-a2enmod include
-a2enmod remoteip
-a2enmod rewrite
-a2enmod setenvif
+cat <<EOF > $PHP_INI_DIR/conf.d/error-logging.ini
+error_reporting = E_ALL
+display_errors = On
+display_startup_errors = On
+log_errors = On
+error_log = /dev/stderr
+log_errors_max_len = 1024
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+html_errors = Off
+EOF
 
 cat <<EOF >> /etc/apache2/apache2.conf
 ServerName localhost
@@ -113,14 +117,22 @@ RemoteIPTrustedProxy 169.254.0.0/16
 RemoteIPTrustedProxy 127.0.0.0/8
 EOF
 
-a2enconf remoteip
+a2enmod deflate
+a2enmod expires
+a2enmod filter
+a2enmod headers
+a2enmod include
+a2enmod remoteip
+a2enmod rewrite
+a2enmod setenvif
 
+a2enconf remoteip
 find /etc/apache2 -type f -name '*.conf' -exec sed -ri 's/([[:space:]]*LogFormat[[:space:]]+"[^"]*)%h([^"]*")/\1%a\2/g' '{}' +
 
 # Install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
-# Install nodejs https://github.com/nodesource/distributions
+# Install Node.js https://github.com/nodesource/distributions
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
 apt-get install -y nodejs
 
