@@ -83,6 +83,12 @@ echo "max_execution_time=0" > $PHP_INI_DIR/conf.d/max-execution-time.ini
 echo "expose_php=off" > $PHP_INI_DIR/conf.d/expose-php.ini
 #echo "default_socket_timeout=120" > $PHP_INI_DIR/conf.d/default-socket-timeout.ini
 
+cat <<EOF > $PHP_INI_DIR/conf.d/fileupload.ini
+file_uploads = On
+upload_max_filesize = 2G
+post_max_size = 2G
+EOF
+
 cat <<EOF > $PHP_INI_DIR/conf.d/opcache.ini
 opcache.memory_consumption=128
 opcache.interned_strings_buffer=8
