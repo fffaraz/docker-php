@@ -140,7 +140,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 
 # Install Node.js https://github.com/nodesource/distributions
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
-apt-get install -y nodejs
+apt-get -y install nodejs
 
 # Environment variables
 # /etc/bash.bashrc
@@ -153,8 +153,10 @@ export PS1='\u@\H:\w\$ '
 alias art='php artisan'
 alias ll='ls -alh'
 EOF
+chmod +x /etc/profile.d/docker-php.sh
 
 # Clean
-apt-get autoremove -y
-apt-get clean
+apt-get -y autoremove
+apt-get -y autoclean
+apt-get -y clean
 rm -rf /var/lib/apt/lists/* /var/cache/apk/* /tmp/* /var/tmp/*
