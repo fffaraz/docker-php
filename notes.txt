@@ -4,6 +4,8 @@ docker-compose exec web bash
 ---
 docker-compose run --rm web composer update --no-interaction
 docker-compose run --rm web composer dumpautoload
+docker-compose exec horizon php artisan horizon:terminate
+---
 docker-compose run --rm web composer require predis/predis
 ---
 docker-compose run --rm -e SLEEP=5 web php artisan migrate:refresh --seed
@@ -33,4 +35,6 @@ https://github.com/fideloper/TrustedProxy
 https://github.com/docker-library/wordpress
 ---
 https://github.com/mkj/dropbear
+---
+docker run --rm -it -p 8080:80 -v $(pwd)/app:/app fffaraz/php
 ---
