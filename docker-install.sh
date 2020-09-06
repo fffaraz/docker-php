@@ -111,6 +111,8 @@ EOF
 
 cat <<EOF >> /etc/apache2/apache2.conf
 ServerName localhost
+ServerTokens Prod
+ServerSignature Off
 SetEnvIf X-Forwarded-Proto "https" HTTPS=on
 EOF
 
@@ -144,7 +146,7 @@ apt-get -y install nodejs
 
 # Environment variables
 # /etc/bash.bashrc
-cat <<EOF >> /etc/profile.d/docker-php.sh
+cat <<EOF >> /etc/profile.d/docker-php-env.sh
 export COMPOSER_HOME=/app/.composer
 export PATH=$PATH:/app/vendor/bin
 export TEMP=/app/.dockerweb/tmp
@@ -153,7 +155,7 @@ export PS1='\u@\H:\w\$ '
 alias art='php artisan'
 alias ll='ls -alh'
 EOF
-chmod +x /etc/profile.d/docker-php.sh
+chmod +x /etc/profile.d/docker-php-env.sh
 
 # Clean
 apt-get -y autoremove

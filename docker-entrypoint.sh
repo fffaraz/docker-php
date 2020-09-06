@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-source /etc/profile.d/docker-php.sh
+source /etc/profile.d/docker-php-env.sh
 
 mkdir -p /app/public
 mkdir -p /app/.dockerweb/tmp
@@ -26,5 +26,6 @@ if [ "$1" == "ssh" ]; then
 fi
 
 sleep ${SLEEP:-0}
+
 # eval "$@" <or> exec "$@"
 su -s /bin/bash -l www-data -c "cd /app; $*"

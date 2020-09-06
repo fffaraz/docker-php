@@ -17,18 +17,6 @@ services:
       - postgres
       - mariadb
       - redis
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.mywebsite-http.entrypoints=http"
-      - "traefik.http.routers.mywebsite-http.rule=Host(`mywebsite.example.com`)"
-      - "traefik.http.routers.mywebsite-http.middlewares=https-redirect@file"
-      - "traefik.http.routers.mywebsite-secure.entrypoints=https"
-      - "traefik.http.routers.mywebsite-secure.rule=Host(`mywebsite.example.com`)"
-      - "traefik.http.routers.mywebsite-secure.tls=true"
-      - "traefik.http.routers.mywebsite-secure.tls.certresolver=http"
-      - "traefik.http.routers.mywebsite-secure.service=mywebsite"
-      - "traefik.http.services.mywebsite.loadbalancer.server.port=80"
-      - "traefik.docker.network=proxy"
 
   ssh:
     image: fffaraz/php
@@ -41,7 +29,7 @@ services:
       - 8022:22
 
   postgres:
-    image: postgres:12.3 # https://hub.docker.com/_/postgres
+    image: postgres:12.4 # https://hub.docker.com/_/postgres
     restart: always
     env_file: .env
     shm_size: 4G
@@ -51,7 +39,7 @@ services:
       - ./conf/postgresql.conf:/etc/postgresql.conf:ro
 
   pgadmin:
-    image: dpage/pgadmin4 # https://hub.docker.com/r/dpage/pgadmin4/
+    image: dpage/pgadmin4:latest # https://hub.docker.com/r/dpage/pgadmin4
     restart: always
     depends_on:
       - postgres
@@ -71,7 +59,7 @@ services:
       - ./volumes/redis:/data
 
   phpredisadmin:
-    image: erikdubbelboer/phpredisadmin # https://github.com/erikdubbelboer/phpRedisAdmin
+    image: erikdubbelboer/phpredisadmin:latest # https://github.com/erikdubbelboer/phpRedisAdmin
     restart: always
     depends_on:
       - redis
@@ -80,7 +68,7 @@ services:
       driver: "none"
 
   mariadb:
-    image: mariadb:10.4 # https://hub.docker.com/_/mariadb/
+    image: mariadb:10.5 # https://hub.docker.com/_/mariadb
     restart: always
     env_file: .env
     volumes:
@@ -89,7 +77,7 @@ services:
       - ./volumes/mysql-log:/var/log/mysql
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin # https://hub.docker.com/r/phpmyadmin/phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest # https://hub.docker.com/r/phpmyadmin/phpmyadmin
     restart: always
     depends_on:
       - mariadb
@@ -99,7 +87,7 @@ services:
       - ./volumes/phpmyadmin:/sessions
 
   adminer:
-    image: adminer # https://github.com/TimWolla/docker-adminer https://github.com/vrana/adminer/
+    image: adminer:latest # https://github.com/TimWolla/docker-adminer https://github.com/vrana/adminer/
     restart: always
     depends_on:
       - postgres
