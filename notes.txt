@@ -51,3 +51,5 @@ docker run --rm -it -p 8080:80 -v $(pwd)/app:/app fffaraz/php
       - "traefik.http.services.mywebsite.loadbalancer.server.port=80"
       - "traefik.docker.network=proxy"
 ---
+https://github.com/shivammathur/setup-php
+---
