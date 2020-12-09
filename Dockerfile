@@ -1,8 +1,8 @@
 FROM php:apache
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-EXPOSE 80 22
-VOLUME /app
+#EXPOSE 80 22
+#VOLUME /app
 WORKDIR /app
 
 COPY docker-install.sh /
