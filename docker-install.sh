@@ -7,7 +7,7 @@ apt-get -yq update
 apt-get -yq upgrade
 apt-get -yq install \
             bash build-essential ca-certificates dnsutils git nano netbase unzip wget whois zip \
-            curl libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev \
+            curl libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev libxml2-dev \
             libfreetype6-dev libicu-dev libjpeg62-turbo-dev libonig-dev libpng-dev libjpeg-dev \
             mariadb-client libpq-dev libsqlite3-dev libbz2-dev zlib1g-dev libzip-dev \
             libmagickwand-dev libwebp-dev libxpm-dev openssh-server gnupg dirmngr \
@@ -38,6 +38,7 @@ docker-php-ext-install -j$(nproc) pdo_pgsql
 docker-php-ext-install -j$(nproc) pdo_sqlite
 docker-php-ext-install -j$(nproc) pgsql
 docker-php-ext-install -j$(nproc) sockets
+docker-php-ext-install -j$(nproc) soap
 docker-php-ext-install -j$(nproc) tokenizer
 docker-php-ext-install -j$(nproc) zip
 # TODO: openssl mcrypt dom gmp memcached mongodb
