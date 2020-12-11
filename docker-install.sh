@@ -45,8 +45,9 @@ docker-php-ext-install -j$(nproc) zip
 
 #pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
 
-pecl install imagick
-docker-php-ext-enable imagick
+# build fails
+#pecl install imagick
+#docker-php-ext-enable imagick
 
 pecl install redis
 docker-php-ext-enable redis
