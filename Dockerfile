@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7-apache
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 #EXPOSE 80 22
