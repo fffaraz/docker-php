@@ -17,6 +17,8 @@ if [[ -f /app/composer.json && ! -f /app/vendor/autoload.php ]]; then
     #TODO: composer install --no-interaction --no-ansi --optimize-autoloader
 fi
 
+[ -f /app/custom-entrypoint.sh ] && su -s /bin/bash -c /app/custom-entrypoint.sh www-data
+
 [ $# -lt 1 ] && exec apache2-foreground
 
 if [ "$1" == "ssh" ]; then
@@ -28,4 +30,4 @@ fi
 sleep ${SLEEP:-0}
 
 # eval "$@" <or> exec "$@"
-su -s /bin/bash -l www-data -c "cd /app; $*"
+su -l -s /bin/bash -c "cd /app; $*" www-data
