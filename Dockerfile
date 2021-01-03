@@ -1,8 +1,10 @@
 FROM php:7-apache
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/docker-entrypoint.sh"]
+
 #EXPOSE 80 22
 #VOLUME /app
+
 WORKDIR /app
 
 COPY docker-install.sh /

@@ -10,7 +10,7 @@ apt-get -yq install \
             curl libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev libxml2-dev \
             libfreetype6-dev libicu-dev libjpeg62-turbo-dev libonig-dev libpng-dev libjpeg-dev \
             mariadb-client libpq-dev libsqlite3-dev libbz2-dev zlib1g-dev libzip-dev \
-            libmagickwand-dev libwebp-dev libxpm-dev openssh-server gnupg dirmngr \
+            libmagickwand-dev libwebp-dev libxpm-dev openssh-server tini gnupg dirmngr \
             ghostscript # Ghostscript is required for rendering PDF previews
 # TODO: logrotate ttf-mscorefonts postgresql-client default-mysql-client
 
