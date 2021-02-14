@@ -1,5 +1,7 @@
 while true; do date; git pull; sleep 5; done
 ---
+https://artisan.page/
+---
 docker-compose exec web bash
 ---
 docker-compose run --rm web composer update --no-interaction
