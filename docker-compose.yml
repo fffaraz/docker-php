@@ -10,6 +10,9 @@ services:
     restart: always
     volumes:
       - ./app:/app
+    logging:
+      options:
+        max-size: 100m
     networks:
       - default
       - proxy

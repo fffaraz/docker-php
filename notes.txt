@@ -55,3 +55,9 @@ docker run --rm -it -p 8080:80 -v $(pwd)/app:/app fffaraz/php
 ---
 https://github.com/shivammathur/setup-php
 ---
+logging:
+  driver: "json-file"
+  options:
+      max-file: 5
+      max-size: 10m
+---
