@@ -32,7 +32,7 @@ services:
       - 8022:22
 
   postgres:
-    image: postgres:12.4 # https://hub.docker.com/_/postgres
+    image: postgres:13 # https://hub.docker.com/_/postgres
     restart: always
     env_file: .env
     shm_size: 4G
@@ -41,6 +41,15 @@ services:
       - ./conf/postgresql.conf:/etc/postgresql.conf:ro
       - ./volumes/postgres:/var/lib/postgresql/data
       - ./volumes/postgres-backup:/backup
+
+  pgbackup:
+    image: postgres:13
+    restart: always
+    env_file: .env
+    command: /bin/bash /scripts/pgbackup.sh
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./volumes/pgbackup:/backup
 
   pgadmin:
     image: dpage/pgadmin4:latest # https://hub.docker.com/r/dpage/pgadmin4
@@ -80,6 +89,15 @@ services:
       - ./volumes/mysql-data:/var/lib/mysql
       - ./volumes/mysql-log:/var/log/mysql
       - ./volumes/mysql-backup:/backup
+
+  mariabackup:
+    image: mariadb:10.5
+    restart: always
+    env_file: .env
+    command: /bin/bash /scripts/mariabackup.sh
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./volumes/mariabackup:/backup
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest # https://hub.docker.com/r/phpmyadmin/phpmyadmin

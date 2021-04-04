@@ -19,7 +19,7 @@ docker-compose run --rm web php artisan storage:link
 docker-compose run --rm web php artisan list
 ---
 docker exec -it XXXXX_postgres_1 bash
-pg_dump -U postgres -c postgres | gzip -5 > /backup/backup.sql.gz
+pg_dump -U postgres -c postgres | gzip -6 > /backup/backup.sql.gz
 ---
 docker-compose run --rm postgres psql -h postgres -U postgres
 VACUUM (VERBOSE, ANALYZE, FULL) users;
