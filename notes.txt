@@ -18,6 +18,13 @@ docker-compose run --rm web php artisan event:generate
 docker-compose run --rm web php artisan storage:link
 docker-compose run --rm web php artisan list
 ---
+docker exec -u postgres XXXXX_postgres_1 pg_ctl stop
+---
+docker exec -it <container_name> psql -U<user_name> -a <db_name>
+docker exec -it <container_name> psql -U<user_name> -a <db_name> -c '<command/query>'
+docker exec -it <container_name> pg_dump -U<user_name> --column-inserts --data-only <db_name> > backup.sql
+docker exec -it <container_name> psql -U<user_name> -a <db_name> -f /backup/data.sql
+---
 docker exec -it XXXXX_postgres_1 bash
 pg_dump -U postgres -c postgres | gzip -6 > /backup/backup.sql.gz
 ---
