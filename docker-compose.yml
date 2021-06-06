@@ -35,7 +35,9 @@ services:
     image: postgres:13 # https://hub.docker.com/_/postgres
     restart: always
     env_file: .env
-    shm_size: 4G
+    shm_size: 8G
+    stop_grace_period: 2m30s
+    stop_signal: SIGINT # Fast Shutdown mode
     command: postgres -c config_file=/etc/postgresql.conf
     volumes:
       - ./conf/postgresql.conf:/etc/postgresql.conf:ro
