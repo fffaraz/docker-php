@@ -31,6 +31,8 @@ pg_dump -U postgres -c postgres | gzip -6 > /backup/backup.sql.gz
 docker-compose run --rm postgres psql -h postgres -U postgres
 VACUUM (VERBOSE, ANALYZE, FULL) users;
 ---
+COPY (SELECT * FROM table) TO PROGRAM 'gzip -3 > /backup/dump/data.csv.gz' DELIMITER E'\t' CSV HEADER;
+---
 https://www.reddit.com/r/docker/comments/f1cn1t/phpapache_app_10x_slower_than_my_nondocker_app_in/
 ---
 https://github.com/khoanguyen96/dockerfiles/tree/master/apache-php-extra
