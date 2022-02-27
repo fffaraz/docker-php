@@ -1,4 +1,4 @@
-FROM php:7-apache
+FROM php:apache
 
 ENTRYPOINT ["/usr/bin/tini", "--", "/docker-entrypoint.sh"]
 
