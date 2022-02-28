@@ -39,13 +39,12 @@ docker-php-ext-install -j$(nproc) pdo_sqlite
 docker-php-ext-install -j$(nproc) pgsql
 docker-php-ext-install -j$(nproc) sockets
 docker-php-ext-install -j$(nproc) soap
-# docker-php-ext-install -j$(nproc) tokenizer
+#docker-php-ext-install -j$(nproc) tokenizer
 docker-php-ext-install -j$(nproc) zip
 # TODO: openssl mcrypt dom gmp memcached mongodb
 
 #pecl config-set php_ini "${PHP_INI_DIR}/php.ini";
 
-# build fails on php 8
 pecl install imagick
 docker-php-ext-enable imagick
 
