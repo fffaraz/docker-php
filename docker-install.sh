@@ -143,7 +143,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 
 # Install Node.js https://github.com/nodesource/distributions
 curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
-apt-get -y install nodejs npm
+apt-get -y install nodejs
 
 # Environment variables
 # /etc/bash.bashrc
