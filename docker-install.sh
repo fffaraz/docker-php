@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
+#echo 'Acquire::http { Proxy "http://192.168.1.2:3142"; };' >> /etc/apt/apt.conf.d/00proxy
+
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get -yq update
@@ -153,6 +155,7 @@ export PATH=$PATH:/app/vendor/bin
 export TEMP=/app/.dockerweb/tmp
 export TERM=xterm
 export PS1='\u@\H:\w\$ '
+export npm_config_cache=/app/.dockerweb/npm-cache
 alias art='php artisan'
 alias ll='ls -alh'
 EOF
