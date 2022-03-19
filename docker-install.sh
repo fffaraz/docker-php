@@ -142,8 +142,8 @@ find /etc/apache2 -type f -name '*.conf' -exec sed -ri 's/([[:space:]]*LogFormat
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 # Install Node.js https://github.com/nodesource/distributions
-curl -sL https://deb.nodesource.com/setup_12.x | bash -
-apt-get -y install nodejs
+curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+apt-get -y install nodejs npm
 
 # Environment variables
 # /etc/bash.bashrc
