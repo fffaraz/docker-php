@@ -29,7 +29,7 @@ services:
     command: ssh
     env_file: .env
     ports:
-      - 8022:22
+      - "8022:22"
 
   postgres:
     image: postgres:14 # https://hub.docker.com/_/postgres
@@ -50,7 +50,7 @@ services:
       - ./volumes/postgres-backup:/backup
 
   pgbackup:
-    image: postgres:13
+    image: postgres:14
     restart: always
     env_file: .env
     command: /bin/bash /scripts/pgbackup.sh
@@ -88,7 +88,7 @@ services:
       driver: "none"
 
   mariadb:
-    image: mariadb:10.5 # https://hub.docker.com/_/mariadb
+    image: mariadb:10.7 # https://hub.docker.com/_/mariadb
     restart: always
     env_file: .env
     volumes:
@@ -98,7 +98,7 @@ services:
       - ./volumes/mysql-backup:/backup
 
   mariabackup:
-    image: mariadb:10.5
+    image: mariadb:10.7
     restart: always
     env_file: .env
     command: /bin/bash /scripts/mariabackup.sh
