@@ -9,7 +9,7 @@ apt-get -yq update
 apt-get -yq upgrade
 apt-get -yq install \
             bash build-essential ca-certificates dnsutils git nano netbase unzip wget whois zip \
-            curl libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev libxml2-dev \
+            curl iputils-ping libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev libxml2-dev \
             libfreetype6-dev libicu-dev libjpeg62-turbo-dev libonig-dev libpng-dev libjpeg-dev \
             mariadb-client libpq-dev libsqlite3-dev libbz2-dev zlib1g-dev libzip-dev \
             libmagickwand-dev libwebp-dev libxpm-dev openssh-server tini gnupg dirmngr \
