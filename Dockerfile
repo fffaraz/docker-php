@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7-apache
 
 COPY docker-install.sh /
 RUN chown root:root /docker-install.sh && chmod 544 /docker-install.sh && sync && /docker-install.sh
