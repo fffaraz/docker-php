@@ -32,7 +32,7 @@ services:
       - "8022:22"
 
   postgres:
-    image: postgres:14 # https://hub.docker.com/_/postgres
+    image: postgres:15 # https://hub.docker.com/_/postgres
     restart: always
     env_file: .env
     shm_size: 8G
@@ -50,7 +50,7 @@ services:
       - ./volumes/postgres-backup:/backup
 
   pgbackup:
-    image: postgres:14
+    image: postgres:15
     restart: always
     env_file: .env
     command: /bin/bash /scripts/pgbackup.sh
@@ -88,7 +88,7 @@ services:
       driver: "none"
 
   mariadb:
-    image: mariadb:10.7 # https://hub.docker.com/_/mariadb
+    image: mariadb:10.10 # https://hub.docker.com/_/mariadb
     restart: always
     env_file: .env
     volumes:
@@ -98,7 +98,7 @@ services:
       - ./volumes/mysql-backup:/backup
 
   mariabackup:
-    image: mariadb:10.7
+    image: mariadb:10.10
     restart: always
     env_file: .env
     command: /bin/bash /scripts/mariabackup.sh
