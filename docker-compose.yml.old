@@ -1,0 +1,126 @@
+version: '3.5'
+
+networks:
+  proxy:
+    external: true
+
+services:
+  web:
+    image: fffaraz/php # https://hub.docker.com/r/fffaraz/php
+    restart: always
+    volumes:
+      - ./app:/app
+    logging:
+      options:
+        max-size: 100m
+    networks:
+      - default
+      - proxy
+    depends_on:
+      - postgres
+      - mariadb
+      - redis
+
+  ssh:
+    image: fffaraz/php
+    restart: always
+    volumes:
+      - ./app:/app
+    command: ssh
+    env_file: .env
+    ports:
+      - "8022:22"
+
+  postgres:
+    image: postgres:15 # https://hub.docker.com/_/postgres
+    restart: always
+    env_file: .env
+    shm_size: 8G
+    stop_grace_period: 2m30s
+    stop_signal: SIGINT # Fast Shutdown mode
+    command: postgres -c config_file=/etc/postgresql.conf
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - ./conf/postgresql.conf:/etc/postgresql.conf:ro
+      - ./volumes/postgres:/var/lib/postgresql/data
+      - ./volumes/postgres-backup:/backup
+
+  pgbackup:
+    image: postgres:15
+    restart: always
+    env_file: .env
+    command: /bin/bash /scripts/pgbackup.sh
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./volumes/pgbackup:/backup
+
+  pgadmin:
+    image: dpage/pgadmin4:latest # https://hub.docker.com/r/dpage/pgadmin4
+    restart: always
+    depends_on:
+      - postgres
+    env_file: .env
+    logging:
+      driver: "none"
+    volumes:
+      - ./volumes/pgadmin:/var/lib/pgadmin
+
+  redis:
+    image: redis:latest # https://hub.docker.com/_/redis
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"] # "--auto-aof-rewrite-min-size", "8mb"
+    logging:
+      driver: "none"
+    volumes:
+      - ./volumes/redis:/data
+
+  phpredisadmin:
+    image: erikdubbelboer/phpredisadmin:latest # https://github.com/erikdubbelboer/phpRedisAdmin
+    restart: always
+    depends_on:
+      - redis
+    env_file: .env
+    logging:
+      driver: "none"
+
+  mariadb:
+    image: mariadb:10.10 # https://hub.docker.com/_/mariadb
+    restart: always
+    env_file: .env
+    volumes:
+      - ./conf/mysql:/etc/mysql/mariadb.conf.d
+      - ./volumes/mysql-data:/var/lib/mysql
+      - ./volumes/mysql-log:/var/log/mysql
+      - ./volumes/mysql-backup:/backup
+
+  mariabackup:
+    image: mariadb:10.10
+    restart: always
+    env_file: .env
+    command: /bin/bash /scripts/mariabackup.sh
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./volumes/mariabackup:/backup
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest # https://hub.docker.com/r/phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    external_links:
+      - mariadb:db
+    volumes:
+      - ./volumes/phpmyadmin:/sessions
+
+  adminer:
+    image: adminer:latest # https://github.com/TimWolla/docker-adminer https://github.com/vrana/adminer/
+    restart: always
+    depends_on:
+      - postgres
+      - mariadb
+    logging:
+      driver: "none"

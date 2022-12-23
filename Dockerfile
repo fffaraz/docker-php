@@ -1,13 +1,12 @@
-FROM php:apache
+FROM php:fpm
 
-COPY docker-install.sh /
-RUN chown root:root /docker-install.sh && chmod 544 /docker-install.sh && sync && /docker-install.sh
+RUN \
+	export DEBIAN_FRONTEND=noninteractive && \
+	apt-get -yq update && \
+	apt-get -yq upgrade && \
+	apt-get -yq install curl git nano ca-certificates dnsutils netbase unzip wget whois zip && \
+	rm -rf /var/lib/apt/lists/* /var/cache/apk/* /tmp/* /var/tmp/* && \
+	exit 0
 
-COPY docker-entrypoint.sh /
-RUN chown root:root /docker-entrypoint.sh && chmod 544 /docker-entrypoint.sh
-
-#EXPOSE 80 22
-#VOLUME /app
-
-WORKDIR /app
-ENTRYPOINT ["/usr/bin/tini", "--", "/docker-entrypoint.sh"]
+COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+COPY myphp.ini /usr/local/etc/php/conf.d/myphp.ini
