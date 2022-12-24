@@ -5,8 +5,8 @@ RUN \
 	apt-get -yq update && \
 	apt-get -yq upgrade && \
 	apt-get -yq --no-install-recommends install \
-	curl git nano ca-certificates dnsutils netbase unzip wget whois zip \
-	libfreetype6-dev libicu-dev libjpeg-dev libmagickwand-dev libpng-dev libwebp-dev libzip-dev libonig-dev && \
+	curl git nano ca-certificates dnsutils netbase unzip wget whois zip sendmail \
+	libfreetype6-dev libicu-dev libjpeg-dev libmagickwand-dev libpng-dev libwebp-dev libzip-dev libonig-dev zlib1g-dev && \
 	curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
 	apt-get -y install nodejs && \
 	rm -rf /var/lib/apt/lists/* /var/cache/apk/* /tmp/* /var/tmp/* && \
