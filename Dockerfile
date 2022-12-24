@@ -12,8 +12,7 @@ RUN \
 
 RUN \
 	docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
-	docker-php-ext-install -j "$(nproc)" bcmath exif gd intl mysqli zip && \
-	docker-php-ext-install -j "$(nproc)" mbstring pdo pdo_mysql && \
+	docker-php-ext-install -j "$(nproc)" bcmath exif gd intl mysqli zip mbstring pdo pdo_mysql && \
 	exit 0
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
