@@ -6,7 +6,7 @@ RUN \
 	apt-get -yq upgrade && \
 	apt-get -yq --no-install-recommends install \
 	curl git nano ca-certificates dnsutils netbase unzip wget whois zip \
-	libfreetype6-dev libicu-dev libjpeg-dev libmagickwand-dev libpng-dev libwebp-dev libzip-dev && \
+	libfreetype6-dev libicu-dev libjpeg-dev libmagickwand-dev libpng-dev libwebp-dev libzip-dev libonig-dev && \
 	rm -rf /var/lib/apt/lists/* /var/cache/apk/* /tmp/* /var/tmp/* && \
 	exit 0
 
