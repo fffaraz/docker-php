@@ -97,6 +97,17 @@ services:
       - ./volumes/mysql-log:/var/log/mysql
       - ./volumes/mysql-backup:/backup
 
+  db:
+    image: mariadb:10.6 # https://endoflife.date/mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret123456
+      - MYSQL_USER=user1
+      - MYSQL_PASSWORD=user1
+      - MYSQL_DATABASE=user1
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+
   mariabackup:
     image: mariadb:10.10
     restart: always

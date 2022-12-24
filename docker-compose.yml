@@ -1,20 +1,16 @@
 version: '3'
 
+networks:
+  dbnet:
+    external: true
+
 services:
   app:
     image: fffaraz/php # https://hub.docker.com/r/fffaraz/php
     restart: always
+    networks:
+      - default
+      - dbnet
     volumes:
       - ./app:/app
       - ./volumes/socket:/socket
-
-  db:
-    image: mariadb:10.6 # https://endoflife.date/mariadb
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret123456
-      - MYSQL_USER=user1
-      - MYSQL_PASSWORD=user1
-      - MYSQL_DATABASE=user1
-    volumes:
-      - ./volumes/mysql:/var/lib/mysql
