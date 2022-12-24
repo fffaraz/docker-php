@@ -15,5 +15,6 @@ RUN \
 	docker-php-ext-install -j "$(nproc)" bcmath exif gd intl mysqli zip && \
 	exiit 0
 
+COPY docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY myphp.ini /usr/local/etc/php/conf.d/myphp.ini

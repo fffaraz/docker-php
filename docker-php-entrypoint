@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+mkdir -p /app/public
+chown -R www-data:www-data /app
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+exec "$@"
