@@ -1,16 +1,14 @@
 version: '3'
 
-networks:
-  dbnet:
-    external: true
-
 services:
   app:
-    image: fffaraz/php # https://hub.docker.com/r/fffaraz/php
+    image: fffaraz/php
     restart: always
-    networks:
-      - default
-      - dbnet
     volumes:
       - ./app:/app
-      - ./volumes/socket:/socket
+      - ./socket:/socket
+      - mariadb1:/db
+
+volumes:
+  mariadb1:
+    external: true
