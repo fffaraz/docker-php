@@ -7,8 +7,8 @@ RUN \
 	apt-get -yq --no-install-recommends install \
 	curl git nano ca-certificates dnsutils netbase unzip wget whois zip sendmail \
 	libfreetype6-dev libicu-dev libjpeg-dev libjpeg62-turbo-dev libmagickwand-dev libpng-dev libwebp-dev libzip-dev zlib1g-dev \
-	iputils-ping libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev libxml2-dev \
-	libpq-dev libsqlite3-dev libbz2-dev libonig-dev && \
+	iputils-ping libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev libxml2-dev libldap2-dev \
+	libpq-dev libsqlite3-dev libbz2-dev libonig-dev dropbear && \
 	curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
 	apt-get -y install nodejs && \
 	rm -rf /var/lib/apt/lists/* /var/cache/apk/* /tmp/* /var/tmp/* && \
@@ -18,14 +18,11 @@ RUN \
 	docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
 	docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
 	docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
-	docker-php-ext-install -j "$(nproc)" \
-	bcmath exif bz2 curl fileinfo iconv gd intl mysqli opcache zip mbstring pdo pdo_pgsql pdo_mysql pdo_sqlite pgsql pcntl sockets soap zip && \
-	pecl install imagick && \
-	docker-php-ext-enable imagick && \
-	pecl install redis && \
-	docker-php-ext-enable redis && \
-	pecl install msgpack && \
-	echo "extension=msgpack.so" > $PHP_INI_DIR/conf.d/msgpack.ini && \
+	docker-php-ext-install -j "$(nproc)" bcmath exif bz2 curl fileinfo iconv gd intl mysqli opcache zip mbstring pdo pdo_pgsql pdo_mysql pdo_sqlite pgsql pcntl sockets soap zip ldap && \
+	docker-php-ext-enable zip ldap && \
+	pecl install imagick && docker-php-ext-enable imagick && \
+	pecl install redis && docker-php-ext-enable redis && \
+	pecl install msgpack && echo "extension=msgpack.so" > $PHP_INI_DIR/conf.d/msgpack.ini && \
 	exit 0
 
 # curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer

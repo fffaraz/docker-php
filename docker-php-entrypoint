@@ -11,7 +11,13 @@ alias art='php artisan'
 alias ll='ls -alh'
 
 mkdir -p /app/public
+mkdir -p /app/.dockerweb
 chown -R www-data:www-data /app
+
+if [ ! -z "${SSH_PASSWORD:+x}" ]; then
+	echo "www-data:${SSH_PASSWORD}" | chpasswd
+	dropbear -Ewgjk -p 22 -K 120 -I 1200
+fi
 
 # service sendmail restart
 
