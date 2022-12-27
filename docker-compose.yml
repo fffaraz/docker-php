@@ -7,8 +7,16 @@ services:
     volumes:
       - ./app:/app
       - ./socket:/socket
-      - mariadb1:/db
+      - mariadb:/db
+
+  dufs:
+    image: sigoden/dufs:latest
+    restart: always
+    command: --bind /socket/dufs.sock --allow-all /app
+    volumes:
+      - ./app:/app
+      - ./socket:/socket
 
 volumes:
-  mariadb1:
+  mariadb:
     external: true
