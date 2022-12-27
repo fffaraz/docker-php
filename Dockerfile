@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:7-fpm
 
 RUN \
 	export DEBIAN_FRONTEND=noninteractive && \
