@@ -5,7 +5,7 @@ RUN \
 	apt-get -yq update && \
 	apt-get -yq upgrade && \
 	apt-get -yq --no-install-recommends install \
-	curl git nano ca-certificates dnsutils netbase unzip wget whois zip sendmail \
+	curl git nano ca-certificates dnsutils netbase unzip wget whois zip sendmail procps \
 	libfreetype6-dev libicu-dev libjpeg-dev libjpeg62-turbo-dev libmagickwand-dev libpng-dev libwebp-dev libzip-dev zlib1g-dev \
 	iputils-ping libcurl4 libcurl4-openssl-dev openssl libmcrypt-dev libssl-dev libxml2-dev libldap2-dev \
 	libpq-dev libsqlite3-dev libbz2-dev libonig-dev dropbear && \
