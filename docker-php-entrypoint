@@ -22,7 +22,7 @@ fi
 
 # TODO: service sendmail restart
 
-if [[ "$1" == "php-fpm" ]]; then
+if [ "$1" = "php-fpm" ]; then
 	shift
 	exec php-fpm "$@"
 	exit 0
