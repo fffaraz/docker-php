@@ -28,5 +28,7 @@ if [ "$1" != "php-fpm" ]; then
 	exit 0
 fi
 
+sleep ${SLEEP:-0}
+
 # exec "$@"
 su -l -s /bin/bash -c "cd /app; $*" www-data
