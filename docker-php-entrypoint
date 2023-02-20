@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eux
 
 export COMPOSER_HOME=/app/.composer
 export PATH=$PATH:/app/vendor/bin
@@ -16,7 +16,7 @@ chown -R www-data:www-data /app
 
 if [ ! -z "${SSH_PASSWORD:+x}" ]; then
 	echo "www-data:${SSH_PASSWORD}" | chpasswd
-	dropbear -FeEwgjk -p 22 -K 30 -I 600
+	exec dropbear -FeEwgjk -p 22 -K 30 -I 600
 	exit 0
 fi
 
@@ -24,7 +24,7 @@ fi
 
 if [ "$1" != "php-fpm" ]; then
 	shift
-	php-fpm "$@"
+	exec php-fpm "$@"
 	exit 0
 fi
 
