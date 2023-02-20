@@ -16,14 +16,17 @@ chown -R www-data:www-data /app
 
 if [ ! -z "${SSH_PASSWORD:+x}" ]; then
 	echo "www-data:${SSH_PASSWORD}" | chpasswd
-	dropbear -Ewgjk -p 22 -K 120 -I 1200
+	dropbear -FeEwgjk -p 22 -K 30 -I 600
+	exit 0
 fi
 
-# service sendmail restart
+# TODO: service sendmail restart
 
-# first arg is `-f` or `--some-option`
-if [ "${1#-}" != "$1" ]; then
-	set -- php-fpm "$@"
+if [ "$1" != "php-fpm" ]; then
+	shift
+	php-fpm "$@"
+	exit 0
 fi
 
-exec "$@"
+# exec "$@"
+su -l -s /bin/bash -c "cd /app; $*" www-data
