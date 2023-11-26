@@ -3,6 +3,7 @@ while true; do date; git pull; sleep 5; done
 https://artisan.page/
 ---
 docker-compose exec web bash
+docker compose exec --user 33 app /bin/bash
 ---
 docker-compose run --rm web composer update --no-interaction
 docker-compose run --rm web composer dumpautoload
@@ -50,7 +51,8 @@ https://github.com/docker-library/wordpress
 ---
 https://github.com/mkj/dropbear
 ---
-docker build --force-rm -f Dockerfile -t fffaraz/php .
+docker pull php:fpm
+docker build --force-rm -f Dockerfile -t fffaraz/php:latest .
 docker run --rm -it -p 8080:80 -v $(pwd)/app:/app fffaraz/php
 ---
     labels:

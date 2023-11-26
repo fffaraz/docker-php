@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eux
 
 export COMPOSER_HOME=/app/.composer
 export PATH=$PATH:/app/vendor/bin
@@ -11,13 +11,24 @@ alias art='php artisan'
 alias ll='ls -alh'
 
 mkdir -p /app/public
+mkdir -p /app/.dockerweb
 chown -R www-data:www-data /app
 
-# service sendmail restart
-
-# first arg is `-f` or `--some-option`
-if [ "${1#-}" != "$1" ]; then
-	set -- php-fpm "$@"
+if [ ! -z "${SSH_PASSWORD:+x}" ]; then
+	echo "www-data:${SSH_PASSWORD}" | chpasswd
+	exec dropbear -FeEwgjk -p 22 -K 30 -I 600
+	exit 0
 fi
 
-exec "$@"
+# TODO: service sendmail restart
+
+if [ "$1" = "php-fpm" ]; then
+	shift
+	exec php-fpm "$@"
+	exit 0
+fi
+
+sleep ${SLEEP:-0}
+
+# exec "$@"
+su -l -s /bin/bash -c "cd /app; $*" www-data
