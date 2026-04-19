@@ -18,7 +18,7 @@ RUN \
 	docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
 	docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
 	docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
-	docker-php-ext-install -j "$(nproc)" bcmath exif bz2 curl fileinfo iconv gd intl mysqli opcache zip mbstring pdo pdo_pgsql pdo_mysql pdo_sqlite pgsql pcntl sockets soap zip ldap && \
+	docker-php-ext-install -j $(nproc) bcmath exif bz2 gd intl mysqli opcache zip pdo_pgsql pdo_mysql pgsql pcntl sockets soap ldap && \
 	docker-php-ext-enable zip ldap && \
 	pecl install imagick && docker-php-ext-enable imagick && \
 	pecl install redis && docker-php-ext-enable redis && \
@@ -28,9 +28,7 @@ RUN \
 # curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-RUN \
-	mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
-	exit 0
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
