@@ -15,11 +15,11 @@ RUN \
 	exit 0
 
 RUN \
-	set +x && \
+	set -x && \
 	docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
 	docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
 	docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
-	docker-php-ext-install -j $(nproc) bcmath exif bz2 gd intl mysqli opcache zip pdo_pgsql pdo_mysql pgsql pcntl sockets soap ldap && \
+	docker-php-ext-install -j $(nproc) bcmath exif bz2 gd intl mysqli zip pdo_pgsql pdo_mysql pgsql pcntl sockets soap ldap && \
 	docker-php-ext-enable zip ldap && \
 	pecl install imagick && docker-php-ext-enable imagick && \
 	pecl install redis && docker-php-ext-enable redis && \
