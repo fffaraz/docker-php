@@ -15,6 +15,7 @@ RUN \
 	exit 0
 
 RUN \
+	set +x && \
 	docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
 	docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
 	docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
